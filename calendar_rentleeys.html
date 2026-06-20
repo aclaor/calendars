@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rentleeys 30-Day Content Calendar</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#ff5a5f;--bg:#f7f8fa;--card:#fff;--border:#e5e7eb;--text:#111827;--text2:#6b7280;--sans:'Plus Jakarta Sans',sans-serif;--body:'Inter',sans-serif;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);font-family:var(--body);color:var(--text);padding:24px;}
+.header{text-align:center;margin-bottom:32px;}
+.header h1{font-family:var(--sans);font-size:28px;font-weight:800;margin-bottom:8px;}
+.header p{color:var(--text2);font-size:15px;}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;justify-content:center;}
+.tab{padding:9px 18px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:var(--card);color:var(--text2);}
+.tab.active{background:var(--primary);color:#fff;border-color:var(--primary);}
+.section{display:none;}
+.section.active{display:block;}
+.week-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:24px;}
+.post-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;position:relative;}
+.post-day{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--primary);margin-bottom:6px;}
+.post-theme{font-size:14px;font-weight:700;color:var(--text);margin-bottom:8px;}
+.post-platforms{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px;}
+.platform{font-size:10px;padding:2px 7px;border-radius:10px;font-weight:600;background:#f3f4f6;color:var(--text2);}
+.post-text{font-size:13px;color:var(--text2);line-height:1.6;background:#f7f8fa;border-radius:8px;padding:12px;margin-bottom:10px;white-space:pre-wrap;}
+.copy-btn{padding:6px 14px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;}
+.copy-btn:hover{opacity:0.9;}
+.tips-card{background:#fff5f5;border:1px solid #fecaca;border-radius:14px;padding:20px;margin-bottom:24px;}
+.tips-title{font-family:var(--sans);font-size:16px;font-weight:700;color:var(--primary);margin-bottom:12px;}
+.tip-item{display:flex;gap:10px;font-size:13px;color:var(--text2);margin-bottom:8px;align-items:flex-start;}
+.bulk-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px;}
+.bulk-title{font-family:var(--sans);font-size:15px;font-weight:700;margin-bottom:12px;}
+.all-posts{display:flex;flex-direction:column;gap:10px;}
+.all-post-item{padding:12px;background:#f7f8fa;border-radius:10px;font-size:13px;color:var(--text2);line-height:1.5;position:relative;}
+.all-post-day{font-size:10px;font-weight:700;color:var(--primary);margin-bottom:4px;text-transform:uppercase;}
+.copy-all-btn{padding:10px 20px;background:var(--primary);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;width:100%;margin-top:16px;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Rentleeys 30-Day Content Calendar</h1>
+  <p>Ready-to-post content for Autopostleey bulk scheduler · All 13 platforms</p>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('week1',this)">Week 1 — Awareness</div>
+  <div class="tab" onclick="showTab('week2',this)">Week 2 — Hosts</div>
+  <div class="tab" onclick="showTab('week3',this)">Week 3 — Guests</div>
+  <div class="tab" onclick="showTab('week4',this)">Week 4 — Social proof</div>
+  <div class="tab" onclick="showTab('bulk',this)">Bulk copy all</div>
+  <div class="tab" onclick="showTab('tips',this)">Posting tips</div>
+</div>
+
+<!-- WEEK 1 -->
+<div class="section active" id="sec-week1">
+  <div class="tips-card">
+    <div class="tips-title">Week 1 theme: Build awareness — introduce Rentleeys to the world</div>
+    <div class="tip-item">🎯 Focus on the value proposition — cheaper than Airbnb</div>
+    <div class="tip-item">📍 Mention Philippines first — your home market</div>
+    <div class="tip-item">🔗 Always include rentleeys.com in every post</div>
+  </div>
+  <div class="week-grid" id="week1-grid"></div>
+</div>
+
+<!-- WEEK 2 -->
+<div class="section" id="sec-week2">
+  <div class="tips-card">
+    <div class="tips-title">Week 2 theme: Recruit hosts — get first listings</div>
+    <div class="tip-item">🏠 Target property owners, Airbnb hosts, condo owners</div>
+    <div class="tip-item">💰 Lead with the 0% fee offer — strongest hook</div>
+    <div class="tip-item">📱 Post in Filipino language on some platforms</div>
+  </div>
+  <div class="week-grid" id="week2-grid"></div>
+</div>
+
+<!-- WEEK 3 -->
+<div class="section" id="sec-week3">
+  <div class="tips-card">
+    <div class="tips-title">Week 3 theme: Attract guests — get first bookings</div>
+    <div class="tip-item">✈️ Target travelers, OFWs, staycation seekers</div>
+    <div class="tip-item">💸 Show the price difference vs Airbnb in pesos</div>
+    <div class="tip-item">📍 Mention specific destinations — Manila, Cebu, Boracay</div>
+  </div>
+  <div class="week-grid" id="week3-grid"></div>
+</div>
+
+<!-- WEEK 4 -->
+<div class="section" id="sec-week4">
+  <div class="tips-card">
+    <div class="tips-title">Week 4 theme: Build trust — features, safety, community</div>
+    <div class="tip-item">🛡️ Highlight RentCover, verified hosts, safe payments</div>
+    <div class="tip-item">📖 Share your story — built this while working 9-to-5</div>
+    <div class="tip-item">🤝 Ask for feedback — community loves being involved</div>
+  </div>
+  <div class="week-grid" id="week4-grid"></div>
+</div>
+
+<!-- BULK COPY -->
+<div class="section" id="sec-bulk">
+  <div class="bulk-card">
+    <div class="bulk-title">All 30 posts — copy one by one to paste into Autopostleey bulk scheduler</div>
+    <div class="all-posts" id="all-posts-list"></div>
+    <button class="copy-all-btn" onclick="copyAllToClipboard()">Copy all 30 posts to clipboard</button>
+  </div>
+</div>
+
+<!-- TIPS -->
+<div class="section" id="sec-tips">
+  <div class="bulk-card">
+    <div class="bulk-title">How to use with Autopostleey bulk scheduler</div>
+    <div style="display:flex;flex-direction:column;gap:10px;font-size:14px;color:var(--text2);">
+      <div style="padding:12px;background:#f7f8fa;border-radius:10px;">
+        <strong style="color:var(--text);">Step 1:</strong> Go to autopostleey.com → Dashboard → Bulk Schedule
+      </div>
+      <div style="padding:12px;background:#f7f8fa;border-radius:10px;">
+        <strong style="color:var(--text);">Step 2:</strong> Select all 13 platforms (or choose your best ones)
+      </div>
+      <div style="padding:12px;background:#f7f8fa;border-radius:10px;">
+        <strong style="color:var(--text);">Step 3:</strong> Set start date to today, frequency to Daily, end date to 30 days from now
+      </div>
+      <div style="padding:12px;background:#f7f8fa;border-radius:10px;">
+        <strong style="color:var(--text);">Step 4:</strong> Paste each post and schedule — Autopostleey will auto-post daily!
+      </div>
+      <div style="padding:12px;background:#f7f8fa;border-radius:10px;">
+        <strong style="color:var(--text);">Best posting times:</strong> 7-9 AM, 12-1 PM, 6-8 PM Philippine time
+      </div>
+      <div style="padding:12px;background:#f7f8fa;border-radius:10px;">
+        <strong style="color:var(--text);">Platforms priority:</strong> Bluesky, LinkedIn, Twitter/X, Facebook, Instagram, Threads, Telegram, Discord
+      </div>
+    </div>
+  </div>
+
+  <div class="bulk-card">
+    <div class="bulk-title">Long-term marketing strategy</div>
+    <div style="display:flex;flex-direction:column;gap:10px;font-size:14px;color:var(--text2);">
+      <div style="padding:12px;background:#f7f8fa;border-radius:10px;">
+        <strong style="color:var(--text);">Month 1:</strong> Build awareness — 30 days of content across all platforms using this calendar
+      </div>
+      <div style="padding:12px;background:#f7f8fa;border-radius:10px;">
+        <strong style="color:var(--text);">Month 2:</strong> Once you have 5+ listings — post photos of actual properties to build social proof
+      </div>
+      <div style="padding:12px;background:#f7f8fa;border-radius:10px;">
+        <strong style="color:var(--text);">Month 3:</strong> Share guest reviews and host earnings stories — real testimonials convert best
+      </div>
+      <div style="padding:12px;background:#f7f8fa;border-radius:10px;">
+        <strong style="color:var(--text);">Ongoing:</strong> Use AI post generator in Autopostleey to create fresh content weekly
+      </div>
+      <div style="padding:12px;background:#f7f8fa;border-radius:10px;">
+        <strong style="color:var(--text);">Key metric:</strong> Track signups in Supabase — goal is 100 registered users in 30 days
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+var POSTS = [
+  // WEEK 1 - Awareness
+  {day:'Day 1',theme:'Launch announcement',week:1,
+   text:`Introducing Rentleeys — the affordable alternative to Airbnb 🏠
+
+Tired of paying 14% service fees on Airbnb? So were we.
+
+Rentleeys charges just 8% — saving you hundreds on every trip.
+
+✅ Verified properties
+✅ Transparent pricing
+✅ Philippines-first, worldwide welcome
+
+Book your first stay at rentleeys.com`},
+
+  {day:'Day 2',theme:'The fee comparison',week:1,
+   text:`Here's why Airbnb is so expensive 🧮
+
+A ₱2,000/night stay for 5 nights = ₱10,000
+Airbnb adds: ₱1,400 service fee (14%)
+You actually pay: ₱11,400
+
+Same stay on Rentleeys:
+We add: ₱800 service fee (8%)
+You pay: ₱10,800
+
+That's ₱600 saved on ONE booking.
+
+Check your next Philippines stay at rentleeys.com`},
+
+  {day:'Day 3',theme:'For the Philippines traveler',week:1,
+   text:`Planning a trip to the Philippines? 🇵🇭
+
+Whether it's Manila, Cebu, Boracay, or Palawan — there's a more affordable way to book your stay.
+
+Rentleeys is a short-term rental platform built specifically with Philippine travelers and hosts in mind.
+
+Lower fees. Local hosts. Same great stays.
+
+Explore at rentleeys.com`},
+
+  {day:'Day 4',theme:'How it works',week:1,
+   text:`How Rentleeys works in 3 steps 👇
+
+1️⃣ Search your destination and dates
+2️⃣ Choose from verified properties with real photos
+3️⃣ Book securely via PayPal — confirmed instantly
+
+No hidden fees. No surprises at checkout.
+
+Start your search at rentleeys.com`},
+
+  {day:'Day 5',theme:'Weekend staycation',week:1,
+   text:`Weekend staycation ideas 🛏️
+
+Instead of spending ₱5,000+ on a hotel this weekend, why not book a fully-equipped condo through Rentleeys?
+
+You get:
+🍳 Full kitchen
+🛋️ Living room
+🏊 Pool access (many properties)
+💰 At a fraction of hotel prices
+
+Browse staycation options at rentleeys.com`},
+
+  {day:'Day 6',theme:'OFW angle',week:1,
+   text:`For OFWs visiting family in the Philippines 🇵🇭❤️
+
+Coming home for vacation? Instead of staying in hotels, book a comfortable home-away-from-home through Rentleeys.
+
+More space, more privacy, better value.
+
+Find accommodations for your homecoming at rentleeys.com`},
+
+  {day:'Day 7',theme:'Week 1 recap',week:1,
+   text:`One week of Rentleeys — here's what we're building 🏗️
+
+A short-term rental platform where:
+🏠 Hosts earn more (2% fee vs Airbnb's 3%)
+✈️ Guests pay less (8% fee vs Airbnb's 14%)
+🇵🇭 Philippines is our home market
+🌏 But we welcome stays worldwide
+
+We're just getting started. List your property or find your next stay at rentleeys.com`},
+
+  // WEEK 2 - Hosts
+  {day:'Day 8',theme:'Host recruitment',week:2,
+   text:`Do you own a condo, apartment, or house in the Philippines? 🏢
+
+Turn it into a source of passive income with Rentleeys.
+
+Here's why hosts choose us over Airbnb:
+✅ Just 2% host fee (Airbnb charges 3%)
+✅ 0% fee for your first 3 months
+✅ Payouts within 24 hours of guest check-in
+✅ Free listing — no upfront cost
+
+Start earning at rentleeys.com/host.html`},
+
+  {day:'Day 9',theme:'Host earnings calculator',week:2,
+   text:`How much can you earn hosting on Rentleeys? 💰
+
+Example: ₱2,500/night condo in BGC
+
+At 70% occupancy (21 nights/month):
+Monthly earnings = ₱52,500
+Rentleeys fee (2%) = just ₱1,050
+Your payout = ₱51,450/month
+
+That's a significant side income — all from a property you already own.
+
+Calculate your earnings at rentleeys.com/payouts.html`},
+
+  {day:'Day 10',theme:'Vs Airbnb host',week:2,
+   text:`Attention Airbnb hosts — are you leaving money on the table? 📊
+
+Here's the math on a ₱3,000/night listing:
+
+Airbnb: You receive ₱2,910 (3% fee deducted)
+Rentleeys: You receive ₱2,940 (2% fee deducted)
+
+Plus guests find you cheaper on Rentleeys (8% vs 14% guest fee) = more bookings.
+
+More bookings + higher payout per booking = more income.
+
+List on Rentleeys at rentleeys.com/host.html`},
+
+  {day:'Day 11',theme:'Host protection',week:2,
+   text:`Worried about renting out your property? 🛡️
+
+Rentleeys has you covered:
+
+✅ Every guest is verified before booking
+✅ Secure PayPal payments — you get paid before guests arrive
+✅ 24/7 support for any issues
+✅ Damage reporting system
+✅ You approve every booking before it's confirmed
+
+Your property is safe. Your income is secure.
+
+Learn more at rentleeys.com`},
+
+  {day:'Day 12',theme:'First host story',week:2,
+   text:`The first Rentleeys host listed this week 🎉
+
+A studio unit in the Philippines is now live on our platform — available for guests at an honest price with lower fees than the big platforms.
+
+This is how marketplaces start. One host at a time.
+
+Are you ready to be our next host?
+List your property FREE at rentleeys.com/host.html`},
+
+  {day:'Day 13',theme:'Host tips',week:2,
+   text:`5 things that get your Rentleeys listing more bookings 📸
+
+1. Add 10+ clear daytime photos
+2. Price competitively to start
+3. Write a detailed description mentioning nearby transport and malls
+4. Respond to guests within 1 hour
+5. Keep your calendar up to date
+
+Read the full guide at rentleeys.com/resources.html`},
+
+  {day:'Day 14',theme:'Host week recap',week:2,
+   text:`Why host on Rentleeys vs Airbnb? A simple comparison 📋
+
+Airbnb:
+• Host fee: 3%
+• Guest fee: 14%
+• Payout: 1-3 days after check-in
+
+Rentleeys:
+• Host fee: 2% (0% for 3 months!)
+• Guest fee: 8%
+• Payout: within 24hrs of check-in
+
+Lower fees for everyone = more bookings for you.
+
+List free at rentleeys.com/host.html`},
+
+  // WEEK 3 - Guests
+  {day:'Day 15',theme:'Guest value prop',week:3,
+   text:`Travelers — stop overpaying for accommodation 💸
+
+Next time you book a stay in the Philippines, compare prices on Rentleeys before booking elsewhere.
+
+Our 8% service fee vs the industry standard 14% means real savings on every trip.
+
+On a ₱15,000 total stay — that's ₱900 you keep in your pocket.
+
+Find your next stay at rentleeys.com`},
+
+  {day:'Day 16',theme:'Manila guide',week:3,
+   text:`Planning a trip to Manila? 🌆
+
+Skip the overpriced hotels. Book a condo in BGC, Makati, or Ortigas through Rentleeys and enjoy:
+
+🏙️ Central locations
+🍳 Full kitchen — save on food costs
+🛋️ More space than a hotel room
+💰 Lower service fees than Airbnb
+
+Explore Manila stays at rentleeys.com`},
+
+  {day:'Day 17',theme:'Cebu travel',week:3,
+   text:`Cebu on a budget? It's possible 🏝️
+
+Cebu City has amazing accommodations from ₱800/night on Rentleeys — perfect for:
+
+• Solo travelers exploring the island
+• Couples on a romantic getaway
+• Families visiting relatives
+• Digital nomads working remotely
+
+Find Cebu stays at rentleeys.com`},
+
+  {day:'Day 18',theme:'Boracay/Palawan',week:3,
+   text:`Dream destinations don't have to break the bank 🌴
+
+Boracay, Palawan, Siargao — the Philippines has some of the world's best beaches.
+
+Rentleeys is helping make these destinations more accessible with lower booking fees and honest pricing.
+
+Explore beach stays at rentleeys.com`},
+
+  {day:'Day 19',theme:'Group travel',week:3,
+   text:`Traveling with friends or family? 👨‍👩‍👧‍👦
+
+Booking a whole house or apartment through Rentleeys is often cheaper than multiple hotel rooms — AND you get:
+
+🍳 Shared kitchen
+🛋️ Common living area
+🎉 Privacy for your group
+💰 Split the cost = everyone saves
+
+Find group stays at rentleeys.com`},
+
+  {day:'Day 20',theme:'Digital nomads',week:3,
+   text:`Remote workers — the Philippines is calling 💻
+
+Fast WiFi, affordable living costs, English-speaking, GMT+8 timezone.
+
+Book extended stays through Rentleeys at discounted weekly and monthly rates.
+
+Perfect for digital nomads who want to experience Southeast Asia while working.
+
+Find your base at rentleeys.com`},
+
+  {day:'Day 21',theme:'Guest safety',week:3,
+   text:`Booking with confidence on Rentleeys 🛡️
+
+Before you stay:
+✅ All hosts are verified with government ID
+✅ Every listing is reviewed and approved by our team
+✅ Secure PayPal payment processing
+✅ 24/7 support via support@rentleeys.com
+
+After you book:
+✅ Direct communication with your host
+✅ RentCover protection on every stay
+✅ Full refund if property isn't as described
+
+Book with confidence at rentleeys.com`},
+
+  // WEEK 4 - Trust & Story
+  {day:'Day 22',theme:'Founder story',week:4,
+   text:`Why I built Rentleeys 🏠
+
+I was looking at Airbnb prices for a Philippines trip and couldn't believe the fees — 14% on top of an already expensive listing.
+
+I thought: someone should build a fairer alternative.
+
+So I did. Working nights and weekends while keeping my day job.
+
+Rentleeys is the result — a short-term rental platform that charges less and pays hosts more.
+
+We're just getting started. rentleeys.com`},
+
+  {day:'Day 23',theme:'Transparency',week:4,
+   text:`We believe in radical transparency 📊
+
+Most booking platforms hide their fees until checkout.
+
+On Rentleeys, you see the full breakdown before you book:
+
+Listing price: ₱2,000/night
+Service fee (8%): ₱160/night
+Total: ₱2,160/night
+
+No surprises. No fine print. Just honest pricing.
+
+Book transparently at rentleeys.com`},
+
+  {day:'Day 24',theme:'Community focus',week:4,
+   text:`Rentleeys is built for communities, not corporations 🤝
+
+When you book on Rentleeys:
+💰 More money stays with local hosts
+🏘️ You support Philippine property owners directly
+📉 Less goes to a billion-dollar company
+
+When you host on Rentleeys:
+💸 You keep more of every booking
+🌱 You join a growing community of local hosts
+
+Be part of something better at rentleeys.com`},
+
+  {day:'Day 25',theme:'Philippines pride',week:4,
+   text:`Built in the Philippines, for the Philippines 🇵🇭
+
+Rentleeys is proudly built by a Filipino developer who believes our country deserves a world-class home-sharing platform.
+
+The Philippines has some of the most beautiful destinations in the world. It also has amazing local hosts who deserve to keep more of what they earn.
+
+That's why we built Rentleeys. rentleeys.com`},
+
+  {day:'Day 26',theme:'Platform features',week:4,
+   text:`What makes Rentleeys different from other booking sites? 🔍
+
+✅ Lower fees than Airbnb (8% vs 14% guest fee)
+✅ 4-step secure booking process
+✅ AI-powered support chat
+✅ RentCover protection on every stay
+✅ Host resources and guides
+✅ Multiple payment options (PayPal, GCash, bank transfer)
+✅ Hosts paid within 24hrs of check-in
+
+All on a platform built with love in the Philippines 🇵🇭
+
+rentleeys.com`},
+
+  {day:'Day 27',theme:'Referral ask',week:4,
+   text:`Know someone with a property to rent out? 🏠
+
+Or a friend planning a trip to the Philippines?
+
+Share Rentleeys with them — you'll be helping them save money and supporting a Filipino-built platform at the same time.
+
+List a property: rentleeys.com/host.html
+Find a stay: rentleeys.com
+
+Thank you for your support! 🙏`},
+
+  {day:'Day 28',theme:'Month recap',week:4,
+   text:`28 days of Rentleeys — where we are and where we're going 🚀
+
+What we've built:
+🏠 Full booking platform (search, listings, payments)
+🛡️ RentCover protection
+💬 AI support chat
+📚 Hosting resource center
+🇵🇭 Philippines-first with global reach
+
+What's next:
+📈 Growing our host community
+✈️ Getting first bookings completed
+🌏 Expanding to more Philippine destinations
+
+Join us at rentleeys.com`},
+
+  {day:'Day 29',theme:'Call to action hosts',week:4,
+   text:`Last call for founding hosts 🏠
+
+The first hosts on any platform get the biggest advantage — early visibility, first reviews, and the lowest fees.
+
+On Rentleeys, our founding hosts get:
+🎁 0% host fee for 3 months
+⭐ Featured listing placement
+📣 Mentioned in our social media
+💰 First bookings at competitive rates
+
+List your property free today at rentleeys.com/host.html`},
+
+  {day:'Day 30',theme:'Month 1 complete',week:4,
+   text:`30 days of building something better 🙏
+
+To everyone who has visited Rentleeys, shared our posts, or listed their property — thank you.
+
+We're building this one booking at a time.
+
+If you believe in fairer travel — help us spread the word.
+
+Follow us for daily updates, travel tips, and exclusive deals.
+
+Book smarter. Host better. rentleeys.com`},
+];
+
+var ALL_PLATFORMS = 'Bluesky, LinkedIn, Twitter/X, Facebook, Instagram, Threads, Telegram, Discord, Pinterest, Tumblr';
+
+function renderWeek(weekNum) {
+  var grid = document.getElementById('week'+weekNum+'-grid');
+  var posts = POSTS.filter(function(p){return p.week===weekNum;});
+  grid.innerHTML = posts.map(function(p,i){
+    return '<div class="post-card">'
+      +'<div class="post-day">'+p.day+'</div>'
+      +'<div class="post-theme">'+p.theme+'</div>'
+      +'<div class="post-platforms"><span class="platform">All platforms</span></div>'
+      +'<div class="post-text" id="post-'+weekNum+'-'+i+'">'+p.text+'</div>'
+      +'<button class="copy-btn" onclick="copyPost('+weekNum+','+i+',this)">Copy post</button>'
+      +'</div>';
+  }).join('');
+}
+
+function renderAllPosts() {
+  var list = document.getElementById('all-posts-list');
+  list.innerHTML = POSTS.map(function(p,i){
+    return '<div class="all-post-item" id="allpost-'+i+'">'
+      +'<div class="all-post-day">'+p.day+' — '+p.theme+'</div>'
+      +p.text
+      +'</div>';
+  }).join('');
+}
+
+function copyPost(week, idx, btn) {
+  var el = document.getElementById('post-'+week+'-'+idx);
+  navigator.clipboard.writeText(el.textContent.trim()).then(function(){
+    btn.textContent = 'Copied!';
+    setTimeout(function(){btn.textContent='Copy post';}, 2000);
+  });
+}
+
+function copyAllToClipboard() {
+  var all = POSTS.map(function(p){
+    return '--- '+p.day+' ('+p.theme+') ---\n'+p.text;
+  }).join('\n\n');
+  navigator.clipboard.writeText(all).then(function(){
+    var btn = document.querySelector('.copy-all-btn');
+    btn.textContent = 'Copied all 30 posts!';
+    setTimeout(function(){btn.textContent='Copy all 30 posts to clipboard';}, 3000);
+  });
+}
+
+function showTab(id, el) {
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active');});
+  el.classList.add('active');
+  document.getElementById('sec-'+id).classList.add('active');
+}
+
+// Init
+renderWeek(1);
+renderWeek(2);
+renderWeek(3);
+renderWeek(4);
+renderAllPosts();
+</script>
+</body>
+</html>
