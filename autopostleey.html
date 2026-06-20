@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Autopostleey 30-Day Content Calendar</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#7c3aed;--bg:#f7f8fa;--card:#fff;--border:#e5e7eb;--text:#111827;--text2:#6b7280;--sans:'Plus Jakarta Sans',sans-serif;--body:'Inter',sans-serif;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);font-family:var(--body);color:var(--text);padding:24px;}
+.header{text-align:center;margin-bottom:32px;}
+.header h1{font-family:var(--sans);font-size:28px;font-weight:800;margin-bottom:8px;}
+.header p{color:var(--text2);font-size:15px;}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;justify-content:center;}
+.tab{padding:9px 18px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:var(--card);color:var(--text2);}
+.tab.active{background:var(--primary);color:#fff;border-color:var(--primary);}
+.section{display:none;}
+.section.active{display:block;}
+.week-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:24px;}
+.post-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;}
+.post-day{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--primary);margin-bottom:6px;}
+.post-theme{font-size:14px;font-weight:700;color:var(--text);margin-bottom:10px;}
+.post-text{font-size:13px;color:var(--text2);line-height:1.6;background:#f7f8fa;border-radius:8px;padding:12px;margin-bottom:10px;white-space:pre-wrap;}
+.copy-btn{padding:6px 14px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;}
+.tips-card{background:#f5f3ff;border:1px solid #ddd6fe;border-radius:14px;padding:20px;margin-bottom:24px;}
+.tips-title{font-family:var(--sans);font-size:16px;font-weight:700;color:var(--primary);margin-bottom:12px;}
+.tip-item{font-size:13px;color:#4c1d95;margin-bottom:6px;}
+.bulk-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px;}
+.bulk-title{font-family:var(--sans);font-size:15px;font-weight:700;margin-bottom:12px;}
+.copy-all-btn{padding:10px 20px;background:var(--primary);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;width:100%;margin-top:16px;}
+.all-post-item{padding:12px;background:#f7f8fa;border-radius:10px;font-size:13px;color:var(--text2);line-height:1.5;margin-bottom:8px;}
+.all-post-day{font-size:10px;font-weight:700;color:var(--primary);margin-bottom:4px;text-transform:uppercase;}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>Autopostleey 30-Day Content Calendar</h1>
+  <p>Ready-to-post content for bulk scheduling · Focus: social media managers, VAs, small businesses</p>
+</div>
+<div class="tabs">
+  <div class="tab active" onclick="showTab('week1',this)">Week 1 — Problem</div>
+  <div class="tab" onclick="showTab('week2',this)">Week 2 — Solution</div>
+  <div class="tab" onclick="showTab('week3',this)">Week 3 — Features</div>
+  <div class="tab" onclick="showTab('week4',this)">Week 4 — Convert</div>
+  <div class="tab" onclick="showTab('bulk',this)">Bulk copy all</div>
+</div>
+
+<div class="section active" id="sec-week1">
+  <div class="tips-card">
+    <div class="tips-title">Week 1 — Agitate the problem: manual social media posting is exhausting</div>
+    <div class="tip-item">🎯 Target: social media managers, VAs, small business owners</div>
+    <div class="tip-item">😤 Lead with the pain of managing multiple platforms</div>
+  </div>
+  <div class="week-grid" id="week1-grid"></div>
+</div>
+
+<div class="section" id="sec-week2">
+  <div class="tips-card">
+    <div class="tips-title">Week 2 — Introduce the solution: post to 13 platforms at once</div>
+    <div class="tip-item">🎯 Lead with the 13 platforms angle — very unique</div>
+    <div class="tip-item">🤖 Highlight the AI post generator</div>
+  </div>
+  <div class="week-grid" id="week2-grid"></div>
+</div>
+
+<div class="section" id="sec-week3">
+  <div class="tips-card">
+    <div class="tips-title">Week 3 — Feature spotlight: go deep on each feature</div>
+    <div class="tip-item">📅 Bulk scheduling, content calendar, analytics</div>
+    <div class="tip-item">🔌 Specific platform integrations (Discord, Telegram, Bluesky)</div>
+  </div>
+  <div class="week-grid" id="week3-grid"></div>
+</div>
+
+<div class="section" id="sec-week4">
+  <div class="tips-card">
+    <div class="tips-title">Week 4 — Convert: social proof, pricing, call to action</div>
+    <div class="tip-item">💰 Free plan available — low barrier to try</div>
+    <div class="tip-item">📣 Ask for signups and shares</div>
+  </div>
+  <div class="week-grid" id="week4-grid"></div>
+</div>
+
+<div class="section" id="sec-bulk">
+  <div class="bulk-card">
+    <div class="bulk-title">All 30 posts — copy to paste into Autopostleey bulk scheduler</div>
+    <div id="all-posts-list"></div>
+    <button class="copy-all-btn" onclick="copyAll()">Copy all 30 posts</button>
+  </div>
+</div>
+
+<script>
+var POSTS = [
+  {day:'Day 1',theme:'The daily grind',week:1,text:`How many tabs do you have open right now for social media? 😅
+
+Facebook. Instagram. LinkedIn. Twitter. Threads. TikTok. Pinterest.
+
+Managing multiple accounts manually is a full-time job inside your full-time job.
+
+There's a better way. autopostleey.com`},
+  {day:'Day 2',theme:'The copy-paste trap',week:1,text:`Copy post. Switch tab. Paste. Adjust hashtags. Switch tab. Paste again.
+
+Repeat 10 times per day across 6 platforms.
+
+Sound familiar? This is how most social media managers spend their mornings.
+
+What if you could do it all in one click? autopostleey.com`},
+  {day:'Day 3',theme:'VA struggle',week:1,text:`Filipino VAs — this one's for you 🇵🇭
+
+Managing 3+ client social media accounts manually is exhausting. By the time you finish posting on the last platform, it's already time to post again.
+
+There's a smarter way to work. Keep reading. autopostleey.com`},
+  {day:'Day 4',theme:'The forgotten platforms',week:1,text:`Your audience isn't just on Instagram and Facebook.
+
+They're also on:
+• Bluesky (growing fast)
+• LinkedIn (B2B goldmine)
+• Discord (communities)
+• Telegram (loyal followers)
+• Pinterest (visual content)
+
+Are you reaching them everywhere? autopostleey.com`},
+  {day:'Day 5',theme:'Time cost',week:1,text:`Quick math for social media managers 🧮
+
+6 platforms × 15 mins each = 90 mins/day
+90 mins × 5 days = 7.5 hours/week
+7.5 hours × 4 weeks = 30 hours/month
+
+That's almost a full week of work just copy-pasting posts.
+
+What would you do with 30 extra hours? autopostleey.com`},
+  {day:'Day 6',theme:'Client management',week:1,text:`Managing social media for multiple clients? 
+
+The bigger your client list, the more time you spend posting instead of strategizing.
+
+The best social media managers automate the repetitive parts so they can focus on what actually matters — the strategy.
+
+autopostleey.com`},
+  {day:'Day 7',theme:'Week 1 problem recap',week:1,text:`This week we asked a simple question:
+
+Why are social media managers still copying and pasting posts manually in 2026?
+
+The answer: they haven't found the right tool yet.
+
+Next week: the solution. autopostleey.com`},
+
+  {day:'Day 8',theme:'Introducing Autopostleey',week:2,text:`Introducing Autopostleey — post to 13 platforms with one click 🚀
+
+Write your post once. Schedule it. We handle the rest.
+
+Currently supports:
+Bluesky · Discord · Telegram · LinkedIn · Twitter/X · Facebook · Instagram · Tumblr · Pinterest · Threads · YouTube · Google Business · FB Groups
+
+Try free at autopostleey.com`},
+  {day:'Day 9',theme:'13 platforms',week:2,text:`Name a social media platform. We probably support it. 🔌
+
+✅ Bluesky
+✅ Discord
+✅ Telegram
+✅ LinkedIn
+✅ Twitter/X
+✅ Facebook Pages
+✅ Instagram
+✅ Tumblr
+✅ Pinterest
+✅ Threads
+✅ YouTube
+✅ Google Business
+✅ Facebook Groups
+
+One dashboard. All platforms. autopostleey.com`},
+  {day:'Day 10',theme:'AI post generator',week:2,text:`Don't know what to post today? 🤖
+
+Just tell Autopostleey what your business does and it writes the post for you.
+
+Powered by AI — generates platform-optimized content that actually sounds human.
+
+No more staring at a blank screen.
+
+Try it free at autopostleey.com`},
+  {day:'Day 11',theme:'Bulk scheduling',week:2,text:`Schedule an entire month of posts in one afternoon 📅
+
+Autopostleey's bulk scheduler lets you:
+• Create posts for 30 days at once
+• Set date, time and frequency
+• Choose which platforms each post goes to
+• Review everything in the content calendar view
+
+Plan once. Post automatically. autopostleey.com`},
+  {day:'Day 12',theme:'For VAs',week:2,text:`Virtual Assistants — multiply your productivity 💪
+
+With Autopostleey you can:
+• Manage 5x more social accounts in the same time
+• Bill clients for strategy, not copy-pasting
+• Show clients a professional content calendar
+• Never miss a posting deadline
+
+Upgrade your VA services at autopostleey.com`},
+  {day:'Day 13',theme:'Bluesky angle',week:2,text:`Are your clients on Bluesky yet? 🦋
+
+Bluesky is growing fast and early movers are getting massive organic reach.
+
+Autopostleey is one of the few tools that supports Bluesky posting alongside all your other platforms.
+
+Get on Bluesky before everyone else does. autopostleey.com`},
+  {day:'Day 14',theme:'Solution week recap',week:2,text:`Week 2 recap — what Autopostleey does:
+
+✅ Posts to 13 platforms simultaneously
+✅ AI generates content for you
+✅ Bulk schedule weeks in advance
+✅ Content calendar for visual planning
+✅ Analytics to see what works
+✅ Free plan available
+
+One tool to rule all your social media. autopostleey.com`},
+
+  {day:'Day 15',theme:'Discord communities',week:3,text:`Running a Discord server or community? 📢
+
+Autopostleey can post announcements directly to your Discord channels via webhook.
+
+No more switching between apps to announce your latest content, product update, or event.
+
+Set it up once at autopostleey.com`},
+  {day:'Day 16',theme:'Telegram channels',week:3,text:`Telegram has some of the most loyal audiences online 📱
+
+Your Telegram followers chose to receive your content directly — they're highly engaged.
+
+Autopostleey connects to your Telegram channel via our @AutopostleeyBot and posts automatically.
+
+Reach your Telegram audience effortlessly. autopostleey.com`},
+  {day:'Day 17',theme:'Content calendar',week:3,text:`The content calendar feature is my favorite part 🗓️
+
+Visual monthly view of all scheduled posts across all platforms.
+
+See gaps in your schedule. Drag to reschedule. Spot patterns in your posting frequency.
+
+Plan your content strategy visually at autopostleey.com`},
+  {day:'Day 18',theme:'Analytics',week:3,text:`Post smarter, not just more 📊
+
+Autopostleey analytics shows you:
+• Which platforms get the most engagement
+• Best times to post for your audience
+• Post performance over time
+• What content types work best
+
+Data-driven social media management. autopostleey.com`},
+  {day:'Day 19',theme:'Post templates',week:3,text:`Never start from scratch again 📝
+
+Autopostleey comes with 35+ ready-to-use post templates across 6 categories:
+
+• Business updates
+• Product launches
+• Educational content
+• Engagement posts
+• Promotional content
+• Seasonal posts
+
+Just customize and post. autopostleey.com`},
+  {day:'Day 20',theme:'LinkedIn specifically',week:3,text:`LinkedIn is the most underused platform for most businesses 💼
+
+Autopostleey's LinkedIn integration lets you schedule thought leadership posts, company updates, and engagement content.
+
+Stop treating LinkedIn as an afterthought. Schedule your LinkedIn strategy with the rest of your content.
+
+autopostleey.com`},
+  {day:'Day 21',theme:'Google Business',week:3,text:`Local businesses — are you posting to Google Business Profile? 📍
+
+Google Business posts appear directly in search results and Google Maps.
+
+Autopostleey can schedule Google Business updates alongside all your other platforms.
+
+Get more local customers. autopostleey.com`},
+
+  {day:'Day 22',theme:'Free plan',week:4,text:`Yes, Autopostleey has a free plan 🎁
+
+Start with 10 posts/month absolutely free.
+No credit card required.
+No time limit.
+
+Perfect to test if it works for your workflow before upgrading.
+
+Start free at autopostleey.com`},
+  {day:'Day 23',theme:'Comparison',week:4,text:`How Autopostleey compares to other schedulers 🆚
+
+Buffer: ~8 platforms, $18/month
+Hootsuite: ~10 platforms, $99/month
+Later: mostly visual platforms
+Autopostleey: 13 platforms including Bluesky, Discord & Telegram
+
+More platforms. Lower price. Built for where social media is going.
+
+autopostleey.com`},
+  {day:'Day 24',theme:'Testimonial angle',week:4,text:`The best feeling as a VA:
+
+Finishing all client social posts for the week before 9 AM Monday.
+
+Then spending the rest of the week on strategy, engagement, and growing the accounts.
+
+Autopostleey makes that possible. autopostleey.com`},
+  {day:'Day 25',theme:'Small business',week:4,text:`Small business owners — you don't need a social media manager
+
+With Autopostleey:
+• Write posts in 30 mins on Sunday
+• Schedule them to all platforms
+• They go out automatically all week
+• You focus on running your business
+
+Social media on autopilot. autopostleey.com`},
+  {day:'Day 26',theme:'Dogfooding',week:4,text:`Fun fact: we use Autopostleey to market Autopostleey 🔄
+
+This post was scheduled using our own bulk scheduler.
+
+It went out simultaneously on Bluesky, LinkedIn, Twitter, Facebook, Instagram, Threads, Telegram, Discord and 5 more platforms.
+
+Total time spent: 30 seconds.
+
+autopostleey.com`},
+  {day:'Day 27',theme:'Referral ask',week:4,text:`Know a VA or social media manager who's drowning in manual work?
+
+Share Autopostleey with them. You might just save them 30 hours a month.
+
+autopostleey.com — free to start, no credit card needed.
+
+Tag someone who needs this 👇`},
+  {day:'Day 28',theme:'Platforms growing',week:4,text:`The social media landscape keeps expanding 🌐
+
+New platforms keep emerging. Your audience spreads thinner.
+
+Tools that only support Facebook and Instagram are becoming less useful every year.
+
+Autopostleey is built for where social media is going — 13 platforms and growing.
+
+autopostleey.com`},
+  {day:'Day 29',theme:'Sign up push',week:4,text:`29 days of Autopostleey content. Here's the simple pitch:
+
+Stop spending hours copy-pasting posts between platforms.
+
+Start scheduling everything once and letting automation do the work.
+
+It's free to start. Takes 5 minutes to set up.
+
+autopostleey.com`},
+  {day:'Day 30',theme:'Month complete',week:4,text:`30 days. 13 platforms. One tool. 🎉
+
+Thank you for following along this month.
+
+If Autopostleey has helped you save time or reach more people — we'd love to hear about it.
+
+If you haven't tried it yet — what are you waiting for?
+
+Free plan at autopostleey.com`},
+];
+
+function renderWeek(n){
+  var g=document.getElementById('week'+n+'-grid');
+  var posts=POSTS.filter(function(p){return p.week===n;});
+  g.innerHTML=posts.map(function(p,i){
+    return '<div class="post-card"><div class="post-day">'+p.day+'</div><div class="post-theme">'+p.theme+'</div>'
+      +'<div class="post-text" id="ap-'+n+'-'+i+'">'+p.text+'</div>'
+      +'<button class="copy-btn" onclick="cp(\'ap-'+n+'-'+i+'\',this)">Copy</button></div>';
+  }).join('');
+}
+
+function renderAll(){
+  var l=document.getElementById('all-posts-list');
+  l.innerHTML=POSTS.map(function(p,i){
+    return '<div class="all-post-item"><div class="all-post-day">'+p.day+' — '+p.theme+'</div>'+p.text+'</div>';
+  }).join('');
+}
+
+function cp(id,btn){
+  navigator.clipboard.writeText(document.getElementById(id).textContent.trim()).then(function(){
+    btn.textContent='Copied!';setTimeout(function(){btn.textContent='Copy';},2000);
+  });
+}
+
+function copyAll(){
+  var all=POSTS.map(function(p){return '--- '+p.day+' ('+p.theme+') ---\n'+p.text;}).join('\n\n');
+  navigator.clipboard.writeText(all).then(function(){
+    var b=document.querySelector('.copy-all-btn');
+    b.textContent='Copied!';setTimeout(function(){b.textContent='Copy all 30 posts';},3000);
+  });
+}
+
+function showTab(id,el){
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active');});
+  el.classList.add('active');
+  document.getElementById('sec-'+id).classList.add('active');
+}
+
+renderWeek(1);renderWeek(2);renderWeek(3);renderWeek(4);renderAll();
+</script>
+</body>
+</html>
