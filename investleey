@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investleey 30-Day Content Calendar</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#0ea5e9;--bg:#f7f8fa;--card:#fff;--border:#e5e7eb;--text:#111827;--text2:#6b7280;--sans:'Plus Jakarta Sans',sans-serif;--body:'Inter',sans-serif;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);font-family:var(--body);color:var(--text);padding:24px;}
+.header{text-align:center;margin-bottom:32px;}
+.header h1{font-family:var(--sans);font-size:28px;font-weight:800;margin-bottom:8px;}
+.header p{color:var(--text2);font-size:15px;}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;justify-content:center;}
+.tab{padding:9px 18px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:var(--card);color:var(--text2);}
+.tab.active{background:var(--primary);color:#fff;border-color:var(--primary);}
+.section{display:none;}
+.section.active{display:block;}
+.week-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:24px;}
+.post-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;}
+.post-day{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--primary);margin-bottom:6px;}
+.post-theme{font-size:14px;font-weight:700;color:var(--text);margin-bottom:10px;}
+.post-text{font-size:13px;color:var(--text2);line-height:1.6;background:#f7f8fa;border-radius:8px;padding:12px;margin-bottom:10px;white-space:pre-wrap;}
+.copy-btn{padding:6px 14px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;}
+.tips-card{background:#e0f2fe;border:1px solid #bae6fd;border-radius:14px;padding:20px;margin-bottom:24px;}
+.tips-title{font-family:var(--sans);font-size:16px;font-weight:700;color:#0369a1;margin-bottom:12px;}
+.tip-item{font-size:13px;color:#0369a1;margin-bottom:6px;}
+.bulk-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px;}
+.bulk-title{font-family:var(--sans);font-size:15px;font-weight:700;margin-bottom:12px;}
+.copy-all-btn{padding:10px 20px;background:var(--primary);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;width:100%;margin-top:16px;}
+.all-post-item{padding:12px;background:#f7f8fa;border-radius:10px;font-size:13px;color:var(--text2);line-height:1.5;margin-bottom:8px;}
+.all-post-day{font-size:10px;font-weight:700;color:var(--primary);margin-bottom:4px;text-transform:uppercase;}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>Investleey 30-Day Content Calendar</h1>
+  <p>Ready-to-post content · Focus: retail investors, Filipino investors, stock traders</p>
+</div>
+<div class="tabs">
+  <div class="tab active" onclick="showTab('week1',this)">Week 1 — Education</div>
+  <div class="tab" onclick="showTab('week2',this)">Week 2 — Pain points</div>
+  <div class="tab" onclick="showTab('week3',this)">Week 3 — Features</div>
+  <div class="tab" onclick="showTab('week4',this)">Week 4 — Convert</div>
+  <div class="tab" onclick="showTab('bulk',this)">Bulk copy all</div>
+</div>
+
+<div class="section active" id="sec-week1">
+  <div class="tips-card">
+    <div class="tips-title">Week 1 — Educational content: build trust with investing knowledge</div>
+    <div class="tip-item">📊 Share investing tips — builds credibility for Investleey</div>
+    <div class="tip-item">🇵🇭 Filipino investor angle — PSE, OFW investments</div>
+  </div>
+  <div class="week-grid" id="week1-grid"></div>
+</div>
+<div class="section" id="sec-week2">
+  <div class="tips-card">
+    <div class="tips-title">Week 2 — Pain points: retail investors are at a disadvantage</div>
+    <div class="tip-item">😤 Big institutions have expensive tools — retail investors don't</div>
+    <div class="tip-item">🎯 Position Investleey as the equalizer</div>
+  </div>
+  <div class="week-grid" id="week2-grid"></div>
+</div>
+<div class="section" id="sec-week3">
+  <div class="tips-card">
+    <div class="tips-title">Week 3 — Feature spotlight: show what Investleey actually does</div>
+    <div class="tip-item">🤖 AI forecasting — the key differentiator</div>
+    <div class="tip-item">📈 Show the dashboard, charts, analytics</div>
+  </div>
+  <div class="week-grid" id="week3-grid"></div>
+</div>
+<div class="section" id="sec-week4">
+  <div class="tips-card">
+    <div class="tips-title">Week 4 — Convert: drive signups and trial starts</div>
+    <div class="tip-item">🆓 Free trial — lowest barrier to entry</div>
+    <div class="tip-item">📣 Ask for shares from the investing community</div>
+  </div>
+  <div class="week-grid" id="week4-grid"></div>
+</div>
+<div class="section" id="sec-bulk">
+  <div class="bulk-card">
+    <div class="bulk-title">All 30 posts</div>
+    <div id="all-posts-list"></div>
+    <button class="copy-all-btn" onclick="copyAll()">Copy all 30 posts</button>
+  </div>
+</div>
+
+<script>
+var POSTS=[
+  {day:'Day 1',theme:'Investing basics',week:1,text:`The most important investing principle most beginners ignore 📊
+
+Diversification isn't just about having different stocks.
+
+It's about having assets that don't move in the same direction at the same time.
+
+Stocks + bonds + real estate + cash = true diversification.
+
+investleey.com`},
+  {day:'Day 2',theme:'Filipino investor tip',week:1,text:`Filipino investors — here's something most financial advisors don't tell you 🇵🇭
+
+The PSE index has historically returned ~10% annually.
+
+A ₱10,000/month investment for 20 years at 10% = ₱7.6 million.
+
+The best time to start was 20 years ago. The second best time is today.
+
+investleey.com`},
+  {day:'Day 3',theme:'Technical analysis 101',week:1,text:`What is technical analysis? (Simple explanation) 📈
+
+Instead of analyzing a company's financials, technical analysis looks at price patterns and trading volume to predict future movements.
+
+Think of it as reading the market's mood.
+
+Is it reliable? Used alongside fundamentals, yes.
+
+Learn more at investleey.com`},
+  {day:'Day 4',theme:'Common mistake',week:1,text:`The #1 investing mistake retail investors make 🚫
+
+Buying stocks based on news headlines.
+
+By the time news reaches retail investors, institutional traders have already priced it in.
+
+Smart retail investors use data and systems — not headlines.
+
+investleey.com`},
+  {day:'Day 5',theme:'OFW investing',week:1,text:`OFWs — you're in a unique investing position 💪
+
+You have USD income in a country where the peso buys a lot.
+
+The smartest OFWs invest in:
+📈 US stocks (you already earn in USD)
+🏠 Philippine real estate (peso advantage)
+💰 PSE blue chips (long-term growth)
+
+Tools like Investleey help you track it all. investleey.com`},
+  {day:'Day 6',theme:'Market timing myth',week:1,text:`"Time in the market beats timing the market" 🕐
+
+Studies consistently show that missing just the 10 best market days in a decade can cut your returns in half.
+
+Stop trying to predict the perfect entry point.
+
+Start investing consistently instead.
+
+investleey.com`},
+  {day:'Day 7',theme:'Week 1 recap',week:1,text:`This week's investing lessons in one post 📚
+
+✅ Diversify properly — not just in stocks
+✅ Compound interest is your best friend
+✅ Technical analysis + fundamentals = complete picture
+✅ Don't trade on headlines
+✅ Time in the market > timing the market
+
+Tools that help: investleey.com`},
+  {day:'Day 8',theme:'Retail vs institutional',week:2,text:`The unfair reality of investing 😤
+
+Institutional investors have:
+• Bloomberg terminals ($24,000/year)
+• Teams of analysts
+• AI-powered forecasting tools
+• Real-time data feeds
+
+Retail investors have:
+• Yahoo Finance
+• Reddit
+• Gut feeling
+
+This is why we built Investleey. investleey.com`},
+  {day:'Day 9',theme:'Data overload',week:2,text:`Information overload is killing retail investors 📉
+
+There are thousands of stocks, hundreds of indicators, and infinite opinions online.
+
+Most retail investors freeze or make emotional decisions.
+
+What you need: a system that filters the noise and gives you clear signals.
+
+investleey.com`},
+  {day:'Day 10',theme:'Emotional trading',week:2,text:`Emotional investing costs retail traders billions annually 😰
+
+Fear and greed cause:
+• Selling at market bottoms
+• Buying at market peaks
+• Holding losers too long
+• Cutting winners too early
+
+AI-powered tools remove emotion from the equation.
+
+investleey.com`},
+  {day:'Day 11',theme:'Research time',week:2,text:`How long does it take you to research one stock? ⏱️
+
+Most retail investors spend 2-4 hours per stock:
+• Reading financial reports
+• Checking price history
+• Analyzing competitors
+• Reading analyst opinions
+
+What if AI could do the heavy lifting in seconds?
+
+investleey.com`},
+  {day:'Day 12',theme:'Bloomberg too expensive',week:2,text:`Bloomberg Terminal: $24,000/year 💸
+
+That's what professional traders pay for institutional-grade data and analysis.
+
+Most retail investors can't afford it.
+
+Investleey brings professional-grade AI analysis to retail investors at a fraction of the cost.
+
+investleey.com`},
+  {day:'Day 13',theme:'Philippine market',week:2,text:`Philippine stock market — underserved by modern tools 🇵🇭
+
+Most AI stock tools focus exclusively on US markets. Filipino investors trading PSE stocks are often left with outdated, basic tools.
+
+Investleey is building the analysis platform Filipino investors deserve.
+
+investleey.com`},
+  {day:'Day 14',theme:'Pain week recap',week:2,text:`The retail investor's dilemma:
+
+You want to invest intelligently but:
+❌ Professional tools cost $24,000/year
+❌ Free tools are basic and outdated
+❌ Information overload leads to bad decisions
+❌ Emotional trading kills returns
+
+There's a better way. investleey.com`},
+  {day:'Day 15',theme:'AI forecasting',week:3,text:`How Investleey's AI forecasting works 🤖
+
+We analyze:
+📊 Historical price patterns
+📈 Technical indicators (RSI, MACD, Bollinger Bands)
+📉 Volume trends
+🌍 Market sentiment data
+
+Output: probability-weighted price forecasts.
+
+Not a crystal ball — a smarter starting point for your analysis.
+
+investleey.com`},
+  {day:'Day 16',theme:'Dashboard tour',week:3,text:`The Investleey dashboard gives you everything in one place 📊
+
+✅ Real-time price data via Polygon API
+✅ AI-generated forecasts for any stock
+✅ Technical analysis charts
+✅ Portfolio performance tracking
+✅ Clean, simple interface
+
+No Bloomberg complexity. Just the signals that matter.
+
+investleey.com`},
+  {day:'Day 17',theme:'Portfolio tracking',week:3,text:`Track all your investments in one dashboard 📱
+
+Philippine stocks (PSE) + US stocks + crypto = complete portfolio picture.
+
+Investleey shows you:
+• Overall portfolio performance
+• Individual stock returns
+• Asset allocation breakdown
+• Historical performance
+
+Know exactly where you stand. investleey.com`},
+  {day:'Day 18',theme:'Technical indicators',week:3,text:`Technical indicators explained simply 📈
+
+RSI (Relative Strength Index): Is the stock overbought or oversold?
+MACD: Is momentum shifting?
+Bollinger Bands: Is the price moving outside normal range?
+
+Investleey calculates all of these automatically and explains what they mean.
+
+investleey.com`},
+  {day:'Day 19',theme:'Free trial',week:3,text:`Investleey free trial — no credit card needed 🆓
+
+Get access to:
+✅ AI stock forecasting
+✅ Technical analysis dashboard
+✅ Portfolio tracking
+✅ Real-time market data
+
+Start your free trial at investleey.com`},
+  {day:'Day 20',theme:'ZeusVisions comparison',week:3,text:`Into crypto as well as stocks? 🪙
+
+Investleey focuses on stocks. Our sister platform ZeusVisions focuses on crypto analysis.
+
+Both use AI-powered forecasting. Both built for retail investors.
+
+Use both for a complete picture of your portfolio.
+
+investleey.com | zeusvisions.com`},
+  {day:'Day 21',theme:'Use case story',week:3,text:`How a retail investor used Investleey last week 📖
+
+1. Saw news about a tech company
+2. Instead of buying on impulse, checked Investleey
+3. AI showed bearish momentum signals
+4. Waited 3 days — stock dropped 8%
+5. Bought at better price
+
+Not guaranteed. But data beats gut feeling every time.
+
+investleey.com`},
+  {day:'Day 22',theme:'Comparison',week:4,text:`Investleey vs the alternatives 🆚
+
+Yahoo Finance: Free, basic charts, no AI
+TradingView: Great charts, expensive, complex
+Bloomberg: Comprehensive, $24K/year
+Investleey: AI forecasting, clean dashboard, affordable
+
+Professional-grade analysis for retail investors.
+
+investleey.com`},
+  {day:'Day 23',theme:'Who it\'s for',week:4,text:`Investleey is built for 3 types of investors 🎯
+
+1. Filipino retail investors who want better tools than what's currently available locally
+
+2. OFWs investing in US stocks from overseas who need clear signals without the noise
+
+3. Beginners who want to invest intelligently without spending years learning technical analysis
+
+investleey.com`},
+  {day:'Day 24',theme:'Disclaimer transparency',week:4,text:`We believe in transparency 📋
+
+Investleey provides AI-powered analysis as one input for your investment decisions.
+
+We're not financial advisors. Past performance doesn't guarantee future results.
+
+But data-driven analysis is always better than guessing.
+
+Use our tools as part of your research process.
+
+investleey.com`},
+  {day:'Day 25',theme:'Community',week:4,text:`The Investleey community is growing 📈
+
+Retail investors from the Philippines and around the world are using AI-powered analysis to make smarter investment decisions.
+
+Join us. Share your analysis. Learn from others.
+
+investleey.com`},
+  {day:'Day 26',theme:'Product Hunt',week:4,text:`Investleey is on Product Hunt! 🚀
+
+If you find value in AI-powered stock analysis for retail investors — please show your support!
+
+A vote helps more investors discover a tool built for them, not for hedge funds.
+
+investleey.com`},
+  {day:'Day 27',theme:'Referral',week:4,text:`Know someone who invests in stocks? 📊
+
+Share Investleey with them. You might help them make a better investment decision.
+
+investleey.com — free trial, no credit card needed.
+
+Tag an investor friend 👇`},
+  {day:'Day 28',theme:'Long term vision',week:4,text:`Our vision for Investleey 🔭
+
+A world where retail investors have access to the same quality of analysis as institutional traders.
+
+No more information asymmetry. No more paying $24K/year for Bloomberg.
+
+AI-powered investing tools for everyone.
+
+investleey.com`},
+  {day:'Day 29',theme:'Final push',week:4,text:`29 days of investing content. Here's the simple pitch:
+
+Stop making investment decisions based on Reddit posts and news headlines.
+
+Start using AI-powered analysis to inform your decisions.
+
+Free trial at investleey.com`},
+  {day:'Day 30',theme:'Month complete',week:4,text:`30 days. Countless investment lessons. One tool. 🎉
+
+Thank you for following along.
+
+If Investleey has helped you make a better investment decision this month — share it with another investor.
+
+If you haven't tried it yet — your free trial is waiting.
+
+investleey.com`},
+];
+
+function renderWeek(n){
+  var g=document.getElementById('week'+n+'-grid');
+  var posts=POSTS.filter(function(p){return p.week===n;});
+  g.innerHTML=posts.map(function(p,i){
+    return '<div class="post-card"><div class="post-day">'+p.day+'</div><div class="post-theme">'+p.theme+'</div>'
+      +'<div class="post-text" id="iv-'+n+'-'+i+'">'+p.text+'</div>'
+      +'<button class="copy-btn" onclick="cp(\'iv-'+n+'-'+i+'\',this)">Copy</button></div>';
+  }).join('');
+}
+function renderAll(){
+  var l=document.getElementById('all-posts-list');
+  l.innerHTML=POSTS.map(function(p){
+    return '<div class="all-post-item"><div class="all-post-day">'+p.day+' — '+p.theme+'</div>'+p.text+'</div>';
+  }).join('');
+}
+function cp(id,btn){
+  navigator.clipboard.writeText(document.getElementById(id).textContent.trim()).then(function(){
+    btn.textContent='Copied!';setTimeout(function(){btn.textContent='Copy';},2000);
+  });
+}
+function copyAll(){
+  var all=POSTS.map(function(p){return '--- '+p.day+' ('+p.theme+') ---\n'+p.text;}).join('\n\n');
+  navigator.clipboard.writeText(all).then(function(){
+    var b=document.querySelector('.copy-all-btn');
+    b.textContent='Copied!';setTimeout(function(){b.textContent='Copy all 30 posts';},3000);
+  });
+}
+function showTab(id,el){
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active');});
+  el.classList.add('active');
+  document.getElementById('sec-'+id).classList.add('active');
+}
+renderWeek(1);renderWeek(2);renderWeek(3);renderWeek(4);renderAll();
+</script>
+</body>
+</html>
